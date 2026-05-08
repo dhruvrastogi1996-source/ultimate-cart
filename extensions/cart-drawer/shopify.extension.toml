@@ -1,0 +1,6 @@
+api_version = "2024-01"
+
+[[extensions]]
+type = "theme_app_extension"
+name = "Ultimate Cart Drawer"
+handle = "ultimate-cart-drawer"
