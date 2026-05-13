@@ -1,0 +1,28 @@
+query Input {
+  cart {
+    cost {
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+    }
+    lines {
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+        }
+      }
+    }
+  }
+  shop {
+    metafield(namespace: "ultimate_cart", key: "milestones") {
+      value
+    }
+  }
+  discountNode {
+    metafield(namespace: "ultimate_cart", key: "discount_config") {
+      value
+    }
+  }
+}

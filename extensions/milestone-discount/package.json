@@ -1,0 +1,12 @@
+{
+  "name": "milestone-discount",
+  "version": "1.0.0",
+  "description": "Milestone-based cart discount Shopify Function",
+  "scripts": {
+    "build": "shopify app function build",
+    "preview": "shopify app function run"
+  },
+  "dependencies": {
+    "@shopify/shopify_function": "1.1.0"
+  }
+}

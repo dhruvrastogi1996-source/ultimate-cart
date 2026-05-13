@@ -1,0 +1,11 @@
+{
+  "cart": {
+    "title": "Your Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "note_placeholder": "Add a note to your order",
+    "free_shipping": "You've unlocked free shipping!",
+    "continue_shopping": "Continue Shopping"
+  }
+}

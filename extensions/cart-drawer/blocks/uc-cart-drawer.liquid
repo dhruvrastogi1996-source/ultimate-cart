@@ -1,0 +1,28 @@
+{% assign uc_app_url = shop.metafields.ultimate_cart.app_url | default: '' %}
+
+<div id="uc-overlay"></div>
+<div id="uc-drawer" data-app-url="{{ uc_app_url }}">
+  <div class="uc-header">
+    <h2>Your Cart</h2>
+    <button class="uc-close" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="uc-body">
+    <div class="uc-empty"><p>Loading cart...</p></div>
+  </div>
+  <div class="uc-footer"></div>
+</div>
+
+{{ 'uc-cart.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'uc-cart.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Ultimate Cart Drawer",
+  "target": "body",
+  "settings": []
+}
+{% endschema %}

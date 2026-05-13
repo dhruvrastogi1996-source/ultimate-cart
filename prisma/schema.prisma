@@ -5,30 +5,105 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
-// enough when changing adapters.
-// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
 datasource db {
   provider = "sqlite"
   url      = "file:dev.sqlite"
 }
 
 model Session {
-  id                  String    @id
-  shop                String
-  state               String
-  isOnline            Boolean   @default(false)
-  scope               String?
-  expires             DateTime?
-  accessToken         String
-  userId              BigInt?
-  firstName           String?
-  lastName            String?
-  email               String?
-  accountOwner        Boolean   @default(false)
-  locale              String?
-  collaborator        Boolean?  @default(false)
-  emailVerified       Boolean?  @default(false)
-  refreshToken        String?
+  id                 String    @id
+  shop               String
+  state              String
+  isOnline           Boolean   @default(false)
+  scope              String?
+  expires            DateTime?
+  accessToken        String
+  userId             BigInt?
+  firstName          String?
+  lastName           String?
+  email              String?
+  accountOwner       Boolean   @default(false)
+  locale             String?
+  collaborator       Boolean?  @default(false)
+  emailVerified      Boolean?  @default(false)
+  refreshToken       String?
   refreshTokenExpires DateTime?
+}
+
+model Market {
+  id                  String      @id @default(cuid())
+  shop                String
+  code                String      // e.g. "IN", "US", "UK"
+  name                String      // e.g. "India", "United States"
+  currency            String      @default("INR")
+  flag                String?     // emoji flag
+  enabled       Boolean  @default(true)
+  cartEnabled   Boolean  @default(true) // false = show OG cart for this market
+  progressStyle       String      @default("segmented") // "segmented" | "sequential"
+  milestoneType       String      @default("cart_value") // "cart_value" | "item_count"
+  allUnlockedMessage  String      @default("All rewards unlocked! \uD83C\uDF89")
+  trustBadges         String      @default("[]") // JSON array of strings
+  milestones          Milestone[]
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  @@unique([shop, code])
+}
+
+model Milestone {
+  id            String   @id @default(cuid())
+  marketId      String
+  market        Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
+  threshold     Float    // cart value or item count
+  reward        String   @default("") // reward label, e.g. "Free Shipping"
+  rewardType    String   @default("none") // "percent_off" | "flat_off" | "none"
+  discountPct   Float    @default(0)
+  fixedDiscount Float    @default(0)
+  icon          String   @default("gift") // "truck" | "gift" | "sparkles"
+  enabled       Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model CartNoteRule {
+  id               String   @id @default(cuid())
+  shop             String
+  trigger          String   @default("always") // "always" | "variant" | "product"
+  selectedVariants String   @default("[]") // JSON array of variant IDs
+  selectedProducts String   @default("[]") // JSON array of product IDs
+  prompt           String   @default("")
+  placeholder      String   @default("")
+  required         Boolean  @default(false)
+  enabled          Boolean  @default(true)
+  sortOrder        Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ThemeSettings {
+  id           String   @id @default(cuid())
+  shop         String   @unique
+  bgColor      String   @default("#FFFFFF")
+  textColor    String   @default("#1A1A1A")
+  accentColor  String   @default("#B8860B")
+  headingFont  String   @default("Cormorant Garamond")
+  bodyFont     String   @default("Inter")
+  buttonStyle  String   @default("rounded") // "square" | "rounded" | "pill"
+  borderRadius String   @default("soft")    // "none" | "soft" | "rounded"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model UpsellProduct {
+  id            String   @id @default(cuid())
+  shop          String
+  productId     String
+  productTitle  String
+  productHandle String   @default("")
+  imageUrl      String   @default("")
+  sortOrder     Int      @default(0)
+  enabled       Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

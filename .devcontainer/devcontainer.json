@@ -1,0 +1,13 @@
+{
+  "forwardPorts": [3457, 4040],
+  "portsAttributes": {
+    "3457": {
+      "visibility": "public",
+      "label": "Shopify App"
+    },
+    "4040": {
+      "visibility": "public",
+      "label": "Shopify Proxy"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+api_version = "2024-01"
+
+[[extensions]]
+type = "function"
+name = "Milestone Discount"
+handle = "milestone-discount"
+description = "Applies automatic percentage discounts when cart value milestones are reached"
+
+[extensions.build]
+command = "npm run build"
+path = "dist/index.wasm"
+watch_paths = ["src/**"]
+
+[[extensions.targeting]]
+module = "./src/index.js"
+target = "purchase.order-discount.run"
+input_query = "./src/input.graphql"

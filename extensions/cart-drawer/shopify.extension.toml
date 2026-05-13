@@ -1,0 +1,7 @@
+api_version = "2025-01"
+uid = "5bc0d789-f5aa-ee2e-0015-c2bd17c134e0c156152c"
+
+[[extensions]]
+type = "theme"
+name = "Ultimate Cart Drawer"
+handle = "ultimate-cart-drawer"
